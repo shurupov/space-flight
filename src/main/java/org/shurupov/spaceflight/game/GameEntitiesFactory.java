@@ -12,6 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.joml.Random;
 import org.joml.Vector3f;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.entity.ModelTexture;
@@ -21,17 +22,22 @@ import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
 @Slf4j
 public class GameEntitiesFactory {
+
+  private static final int ETALON_WIDTH = 200;
+
+  private final Random random = new Random();
+
   @Setter
   private Loader loader;
 
   public List<Entity> entities() {
     List<Entity> entities = new ArrayList<>();
 
-    addEntity(entities, () -> spaceship());
-    for (int i = 0; i < 10; i++) {
-      int finalI = i;
-      addEntity(entities, () -> planet(finalI));
+    for (int i = 0; i < 15; i++) {
+      addEntity(entities, this::meteor);
     }
+
+    addEntity(entities, this::spaceship);
 
     return entities;
   }
@@ -46,6 +52,10 @@ public class GameEntitiesFactory {
 
   public Entity spaceship() throws IOException {
     return entity( "assets/images/spaceRockets_003.png", 0, 0, 0);
+  }
+
+  public Entity meteor() throws IOException {
+    return entity("assets/images/meteors/spaceMeteors_" + String.format("%03d", random.nextInt(4) + 1) + ".png", 0, -0.5f + random.nextFloat() * 1.2f, -0.5f + random.nextFloat() * 1.2f);
   }
 
   public Entity planet(int number) throws IOException {
@@ -88,21 +98,21 @@ public class GameEntitiesFactory {
     log.info("Loading model using texture {}", texturePath);
 
     BufferedImage bufferedImage = ImageIO.read(new FileInputStream(texturePath));
-    int modelWidth = bufferedImage.getWidth();
-    int modelHeight = bufferedImage.getHeight();
+    int width = bufferedImage.getWidth();
+    int height = bufferedImage.getHeight();
 
     float[] modelVerticesInModelUnit = {
-        calcCoordinate(LEFT, X, modelWidth, modelHeight),
-        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight),
+        calcCoordinate(LEFT, X, width, height),
+        calcCoordinate(Position.TOP, Y, width, height),
         0,
-        calcCoordinate(LEFT, X, modelWidth, modelHeight),
-        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight),
+        calcCoordinate(LEFT, X, width, height),
+        calcCoordinate(Position.BOTTOM, Y, width, height),
         0,
-        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight),
-        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight),
+        calcCoordinate(Position.RIGHT, X, width, height),
+        calcCoordinate(Position.BOTTOM, Y, width, height),
         0,
-        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight),
-        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight),
+        calcCoordinate(Position.RIGHT, X, width, height),
+        calcCoordinate(Position.TOP, Y, width, height),
         0,
     };
 
@@ -136,7 +146,7 @@ public class GameEntitiesFactory {
         staticModel,
         new Vector3f(x, y, -0.5f),
         0, 0, rotation,
-        0.15f
+        0.15f * ((float) width / ETALON_WIDTH)
     );
   }
 

@@ -35,7 +35,7 @@ public class Renderer {
      */
     public void prepare() {
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT); // Очистка экрана и рисование цветом в цветовом буфере
-        GL11.glClearColor(0.1f, 0.2f, 0.3f, 1); // Загрузка выбранного цвета в цветовой буфер
+        GL11.glClearColor(0f, 0f, 0f, 1); // Загрузка выбранного цвета в цветовой буфер
     }
     
     /**
