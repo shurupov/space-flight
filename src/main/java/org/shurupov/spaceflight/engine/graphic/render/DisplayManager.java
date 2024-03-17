@@ -29,6 +29,7 @@ import static org.lwjgl.glfw.GLFW.glfwWindowShouldClose;
 import static org.lwjgl.opengl.GL11.GL_FALSE;
 import static org.lwjgl.opengl.GL11.GL_TRUE;
 
+import lombok.Getter;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.shurupov.spaceflight.engine.graphic.io.Keyboard;
@@ -38,23 +39,34 @@ import org.shurupov.spaceflight.engine.graphic.io.Mouse;
  * Управление дисплеем
  */
 public class DisplayManager {
-    
-    /** ссылка на окно */
-    public static long window;
-    /** ширина окна */
-    public static final int WINDOW_WIDTH = 800;
-    /** высота окна */
-    public static final int WINDOW_HEIGHT = 800;
+
+    public static final int CANVAS_PIXEL_CHUNK = 10;
+
     /** заголовок окна*/
-    private static final String TITLE = "Game";
+    private final String title;
+    /** ширина окна */
+    @Getter
+    private final int windowWidth;
+    /** высота окна */
+    @Getter
+    private final int windowHeight;
+
+    /** ссылка на окно */
+    public long window;
     
-    private static Keyboard keyboard;
-    private static Mouse mouse;
+    private Keyboard keyboard;
+    private Mouse mouse;
+
+    public DisplayManager(String title, int windowWidth, int windowHeight) {
+        this.title = title;
+        this.windowWidth = windowWidth / CANVAS_PIXEL_CHUNK * CANVAS_PIXEL_CHUNK;
+        this.windowHeight = windowHeight / CANVAS_PIXEL_CHUNK * CANVAS_PIXEL_CHUNK;
+    }
 
     /**
      * Создание окна, объявляем до начала самой игры
      */
-    public static void createDisplay() {
+    public void createDisplay() {
         // Инициализация GLFW. Большинство функций GLFW не будут работать перед этим
         if (!glfwInit())
             throw new RuntimeException("Не могу инициализировать GLFW");
@@ -70,7 +82,7 @@ public class DisplayManager {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
         // создание окна
-        window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, TITLE, 0, 0);
+        window = glfwCreateWindow(windowWidth, windowHeight, title, 0, 0);
         if (window == 0) 
             throw new RuntimeException("Ошибка создания GLFW окна");
 
@@ -78,7 +90,7 @@ public class DisplayManager {
         GLFWVidMode vidMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
         assert vidMode != null;
         // устанавливаем окно в центр экрана
-        glfwSetWindowPos(window, (vidMode.width() - WINDOW_WIDTH) / 2, (vidMode.height() - WINDOW_HEIGHT) / 2);
+        glfwSetWindowPos(window, (vidMode.width() - windowWidth) / 2, (vidMode.height() - windowHeight) / 2);
 
         keyboard = new Keyboard();
         mouse = new Mouse();
@@ -106,9 +118,9 @@ public class DisplayManager {
     /**
      * Для обновления окна каждый кадр
      */
-    public static void updateDisplay() {
+    public void updateDisplay() {
         glfwSwapBuffers(window); // поменяем цветовые буферы
-        // Gроверяет были ли вызваны какие либо события (вроде ввода с клавиатуры или перемещение мыши)
+        // Проверяет были ли вызваны какие либо события (вроде ввода с клавиатуры или перемещение мыши)
         glfwPollEvents(); 
     }
     
@@ -116,7 +128,7 @@ public class DisplayManager {
      * Закрытие окна по завершении игры.
      * Освободить обратные вызовы окна и уничтожить окно
      */
-    public static void closeDisplay() {
+    public void closeDisplay() {
         mouse.destroy();
         keyboard.close();
         glfwWindowShouldClose(window); // Освобождаем обратные вызовы окна
@@ -128,7 +140,7 @@ public class DisplayManager {
      * Проверяет в начале каждой итерации цикла, получил ли GLFW инструкцию к закрытию, 
      * @return если закрыто окно, то функция вернет false
      */
-    public static boolean shouldDisplayClose() {
+    public boolean shouldDisplayClose() {
         return !glfwWindowShouldClose(window);
     }
 }

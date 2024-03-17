@@ -9,6 +9,7 @@ import org.shurupov.spaceflight.engine.graphic.shaders.StaticShader;
 @RequiredArgsConstructor
 public class Game {
 
+  private final DisplayManager displayManager;
   private final Loader loader; // загрузчик моделей
   private final StaticShader shader; // шейдер статических моделей
   private final Command iterationCommand;
@@ -16,7 +17,7 @@ public class Game {
   public void loop() {
 
     // запускаем цикл пока пользователь не закроет окно
-    while (DisplayManager.shouldDisplayClose()) {
+    while (displayManager.shouldDisplayClose()) {
       iterationCommand.execute();
     }
   }
@@ -24,6 +25,6 @@ public class Game {
   public void cleanUp() {
     shader.cleanUp(); // очищаем шейдер статических моделей
     loader.cleanUp(); // очищаем память от загруженной модели
-    DisplayManager.closeDisplay();
+    displayManager.closeDisplay();
   }
 }

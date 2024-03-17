@@ -1,26 +1,39 @@
 package org.shurupov.spaceflight.game;
 
+import static org.shurupov.spaceflight.engine.graphic.render.DisplayManager.CANVAS_PIXEL_CHUNK;
+
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector3f;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.entity.ModelTexture;
 import org.shurupov.spaceflight.engine.graphic.entity.RawModel;
 import org.shurupov.spaceflight.engine.graphic.entity.TexturedModel;
+import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
 import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
 @Slf4j
 public class GameEntitiesFactory {
 
-  public List<Entity> entities(Loader loader) {
+  @Setter
+  private DisplayManager displayManager;
+  @Setter
+  private Loader loader;
+
+  public List<Entity> entities() {
     List<Entity> entities = new ArrayList<>();
 
-    addEntity(entities, () -> spaceship(loader));
+    addEntity(entities, () -> spaceship());
+    for (int i = 0; i < 10; i++) {
+      int finalI = i;
+      addEntity(entities, () -> planet(finalI));
+    }
 
     return entities;
   }
@@ -29,15 +42,19 @@ public class GameEntitiesFactory {
     try {
       entities.add(creator.create());
     } catch (Throwable e) {
-      log.error("Failed to load");
+      log.error("Failed to load texture");
     }
   }
 
-  public Entity spaceship(Loader loader) throws IOException {
-    return entity(loader, "assets/images/spaceRockets_003.png", -90);
+  public Entity spaceship() throws IOException {
+    return entity( "assets/images/spaceRockets_003.png", -90, 0, 5);
   }
 
-  public Entity entity(Loader loader, String texturePath, float rotation) throws IOException {
+  public Entity planet(int number) throws IOException {
+    return entity("assets/images/planets/planet" + String.format("%02d", number) + ".png", -90, 50, 50);
+  }
+
+  public Entity entity(String texturePath, float rotation, float x, float y) throws IOException {
     log.info("Loading model using texture {}", texturePath);
 
     BufferedImage bufferedImage = ImageIO.read(new FileInputStream(texturePath));
@@ -80,9 +97,12 @@ public class GameEntitiesFactory {
     // Создание текстурной модели
     TexturedModel staticModel = new TexturedModel(model, texture);
 
+    float absoluteX = (x * CANVAS_PIXEL_CHUNK) / displayManager.getWindowWidth() - 0.5f;
+    float absoluteY = (-y * CANVAS_PIXEL_CHUNK) / displayManager.getWindowHeight() + 0.5f;
+
     return new Entity(
         staticModel,
-        new Vector3f(-0.02f, 0.3f, 0),
+        new Vector3f(absoluteX, absoluteY, 0),
         0, 0, rotation,
         0.8f
     );

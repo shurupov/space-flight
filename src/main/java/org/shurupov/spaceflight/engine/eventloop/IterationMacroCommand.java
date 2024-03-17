@@ -2,17 +2,15 @@ package org.shurupov.spaceflight.engine.eventloop;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.lwjgl.glfw.GLFW;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
-import org.shurupov.spaceflight.engine.graphic.io.Keyboard;
-import org.shurupov.spaceflight.engine.graphic.io.Mouse;
 import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
 import org.shurupov.spaceflight.engine.graphic.render.Renderer;
 import org.shurupov.spaceflight.engine.graphic.shaders.StaticShader;
 
 @RequiredArgsConstructor
-public class IterationCommand implements Command {
+public class IterationMacroCommand implements Command {
 
+  private final DisplayManager displayManager;
   private final List<Entity> entities;
   private final Renderer renderer;
   private final StaticShader shader;
@@ -42,6 +40,6 @@ public class IterationCommand implements Command {
     }
     shader.stop(); // останавливаем шейдер статических моделей
 
-    DisplayManager.updateDisplay();
+    displayManager.updateDisplay();
   }
 }
