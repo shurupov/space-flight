@@ -1,6 +1,5 @@
 package org.shurupov.spaceflight.game;
 
-import static org.shurupov.spaceflight.engine.graphic.render.DisplayManager.CANVAS_PIXEL_CHUNK;
 import static org.shurupov.spaceflight.game.GameEntitiesFactory.CoordinateType.X;
 import static org.shurupov.spaceflight.game.GameEntitiesFactory.CoordinateType.Y;
 import static org.shurupov.spaceflight.game.GameEntitiesFactory.Position.LEFT;
@@ -18,15 +17,10 @@ import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.entity.ModelTexture;
 import org.shurupov.spaceflight.engine.graphic.entity.RawModel;
 import org.shurupov.spaceflight.engine.graphic.entity.TexturedModel;
-import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
-import org.shurupov.spaceflight.engine.graphic.render.Loader;
 import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
 @Slf4j
 public class GameEntitiesFactory {
-
-  @Setter
-  private DisplayManager displayManager;
   @Setter
   private Loader loader;
 
@@ -51,14 +45,14 @@ public class GameEntitiesFactory {
   }
 
   public Entity spaceship() throws IOException {
-    return entity( "assets/images/spaceRockets_003.png", 0, 0, 50);
+    return entity( "assets/images/spaceRockets_003.png", 0, 0, 0);
   }
 
   public Entity planet(int number) throws IOException {
-    return entity("assets/images/planets/planet" + String.format("%02d", number) + ".png", 0, 50, 50);
+    return entity("assets/images/planets/planet" + String.format("%02d", number) + ".png", 0, -0.5f + (number * 0.1f), -0.3f + (number * 0.07f));
   }
 
-  private float calcCoordinate(Position position, CoordinateType coordType, int modelWidth, int modelHeight, int windowWidth, int windowHeight) {
+  private float calcCoordinate(Position position, CoordinateType coordType, int modelWidth, int modelHeight) {
 
     int maxDimension = Math.max(modelWidth, modelHeight);
     float result = switch (coordType) {
@@ -98,17 +92,17 @@ public class GameEntitiesFactory {
     int modelHeight = bufferedImage.getHeight();
 
     float[] modelVerticesInModelUnit = {
-        calcCoordinate(LEFT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
-        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(LEFT, X, modelWidth, modelHeight),
+        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight),
         0,
-        calcCoordinate(LEFT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
-        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(LEFT, X, modelWidth, modelHeight),
+        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight),
         0,
-        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
-        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight),
+        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight),
         0,
-        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
-        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight),
+        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight),
         0,
     };
 
@@ -138,14 +132,11 @@ public class GameEntitiesFactory {
     // Создание текстурной модели
     TexturedModel staticModel = new TexturedModel(model, texture);
 
-    float absoluteX = (x * CANVAS_PIXEL_CHUNK) / displayManager.getWindowWidth() - 0.5f;
-    float absoluteY = (-y * CANVAS_PIXEL_CHUNK) / displayManager.getWindowHeight() + 0.5f;
-
     return new Entity(
         staticModel,
-        new Vector3f(absoluteX, absoluteY, 0),
+        new Vector3f(x, y, -0.5f),
         0, 0, rotation,
-        0.3f
+        0.15f
     );
   }
 

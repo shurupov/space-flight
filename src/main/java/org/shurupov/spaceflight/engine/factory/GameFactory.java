@@ -22,7 +22,6 @@ public class GameFactory {
     StaticShader shader = staticShader();
     Renderer renderer = renderer(shader, displayManager);
     gameEntitiesFactory.setLoader(loader);
-    gameEntitiesFactory.setDisplayManager(displayManager);
     Command iterationCommand = iterationFactory.iterationCommand(displayManager, gameEntitiesFactory.entities(), renderer, shader);
     return new Game(displayManager, loader, staticShader(), iterationCommand);
   }
