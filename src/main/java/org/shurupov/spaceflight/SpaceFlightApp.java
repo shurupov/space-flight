@@ -9,7 +9,7 @@ public class SpaceFlightApp {
 
   public static void main(String[] args) {
     GameFactory gameFactory = new GameFactory(new IterationFactory(), new GameEntitiesFactory());
-    Game game = gameFactory.game("Space Flight", 800, 800);
+    Game game = gameFactory.game("Space Flight", 1200, 800);
     game.loop();
     game.cleanUp();
   }

@@ -13,6 +13,8 @@ public class StaticShader extends ShaderProgram {
     
     // идентификатор юниформы матрицы трансформации
     private int location_transformationMatrix;
+    // идентификатор юниформы матрицы проекции
+    private int location_projectionMatrix;
     
     public StaticShader() {
         super(VERTEX_FILE, FRAGMENT_FILE);
@@ -25,10 +27,12 @@ public class StaticShader extends ShaderProgram {
         super.bindAttribute(1, "textureCoords");
     }
 
+
     @Override
     protected void getAllUniformLocations() {
-        // регестрируем юниформу
+        // регестрируем юниформы
         location_transformationMatrix = super.getUniformLocation("transformationMatrix");
+        location_projectionMatrix = super.getUniformLocation("projectionMatrix");
     }
     
     /**
@@ -38,5 +42,14 @@ public class StaticShader extends ShaderProgram {
     public void loadTransformationMatrix(Matrix4f matrix) {
         super.loadMatrix(location_transformationMatrix, matrix);
     }
+
+    /**
+     * Загрузка данных, матрицы проекции, в юниформу
+     * @param matrix матрица проекции
+     */
+    public void loadProjectionMatrix(Matrix4f matrix) {
+        super.loadMatrix(location_projectionMatrix, matrix);
+    }
+
 }
 

@@ -1,6 +1,9 @@
 package org.shurupov.spaceflight.game;
 
 import static org.shurupov.spaceflight.engine.graphic.render.DisplayManager.CANVAS_PIXEL_CHUNK;
+import static org.shurupov.spaceflight.game.GameEntitiesFactory.CoordinateType.X;
+import static org.shurupov.spaceflight.game.GameEntitiesFactory.CoordinateType.Y;
+import static org.shurupov.spaceflight.game.GameEntitiesFactory.Position.LEFT;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -16,6 +19,7 @@ import org.shurupov.spaceflight.engine.graphic.entity.ModelTexture;
 import org.shurupov.spaceflight.engine.graphic.entity.RawModel;
 import org.shurupov.spaceflight.engine.graphic.entity.TexturedModel;
 import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
+import org.shurupov.spaceflight.engine.graphic.render.Loader;
 import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
 @Slf4j
@@ -47,11 +51,43 @@ public class GameEntitiesFactory {
   }
 
   public Entity spaceship() throws IOException {
-    return entity( "assets/images/spaceRockets_003.png", -90, 0, 5);
+    return entity( "assets/images/spaceRockets_003.png", 0, 0, 50);
   }
 
   public Entity planet(int number) throws IOException {
-    return entity("assets/images/planets/planet" + String.format("%02d", number) + ".png", -90, 50, 50);
+    return entity("assets/images/planets/planet" + String.format("%02d", number) + ".png", 0, 50, 50);
+  }
+
+  private float calcCoordinate(Position position, CoordinateType coordType, int modelWidth, int modelHeight, int windowWidth, int windowHeight) {
+
+    int maxDimension = Math.max(modelWidth, modelHeight);
+    float result = switch (coordType) {
+      case X -> (float) modelWidth;
+      case Y -> (float) modelHeight;
+      default -> throw new RuntimeException();
+    };
+
+    result = switch (position) {
+      case TOP, LEFT -> maxDimension - result;
+      case BOTTOM, RIGHT -> maxDimension + result;
+      default -> throw new RuntimeException();
+    };
+
+    result /= 2;
+
+    result /= maxDimension;
+
+    result -= 0.5f;
+
+    return result;
+  }
+
+  public enum Position {
+    LEFT, RIGHT, TOP, BOTTOM
+  }
+
+  public enum CoordinateType {
+    X, Y
   }
 
   public Entity entity(String texturePath, float rotation, float x, float y) throws IOException {
@@ -61,14 +97,19 @@ public class GameEntitiesFactory {
     int modelWidth = bufferedImage.getWidth();
     int modelHeight = bufferedImage.getHeight();
 
-    int maxDimension = Math.max(modelWidth, modelHeight);
-    int dimensionDifference = Math.abs(modelHeight-modelWidth);
-    int dimensionSum = modelHeight+modelWidth;
     float[] modelVerticesInModelUnit = {
-        0 + (float) dimensionDifference / 2 / maxDimension - 0.5f, 0.5f, 0f,
-        0 + (float) dimensionDifference / 2 / maxDimension - 0.5f, -0.5f, 0f,
-        0 + (float) dimensionSum / 2 / maxDimension - 0.5f, -0.5f, 0f,
-        0 + (float) dimensionSum / 2 / maxDimension - 0.5f, 0.5f, 0f,
+        calcCoordinate(LEFT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        0,
+        calcCoordinate(LEFT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        0,
+        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(Position.BOTTOM, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        0,
+        calcCoordinate(Position.RIGHT, X, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        calcCoordinate(Position.TOP, Y, modelWidth, modelHeight, displayManager.getWindowWidth(), displayManager.getWindowHeight()),
+        0,
     };
 
     float[] vertices = new float[modelVerticesInModelUnit.length];
@@ -104,7 +145,7 @@ public class GameEntitiesFactory {
         staticModel,
         new Vector3f(absoluteX, absoluteY, 0),
         0, 0, rotation,
-        0.8f
+        0.3f
     );
   }
 

@@ -19,8 +19,8 @@ public class GameFactory {
     DisplayManager displayManager = displayManager(title, windowWidth, windowHeight);
     displayManager.createDisplay();
     Loader loader = loader();
-    Renderer renderer = renderer();
     StaticShader shader = staticShader();
+    Renderer renderer = renderer(shader, displayManager);
     gameEntitiesFactory.setLoader(loader);
     gameEntitiesFactory.setDisplayManager(displayManager);
     Command iterationCommand = iterationFactory.iterationCommand(displayManager, gameEntitiesFactory.entities(), renderer, shader);
@@ -35,8 +35,8 @@ public class GameFactory {
     return new Loader();
   }
 
-  public Renderer renderer() {
-    return new Renderer();
+  public Renderer renderer(StaticShader shader, DisplayManager displayManager) {
+    return new Renderer(shader, displayManager);
   }
 
   public StaticShader staticShader() {

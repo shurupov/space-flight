@@ -36,6 +36,8 @@ public class IterationMacroCommand implements Command {
 
     shader.start(); // запускаем шейдер статических моделей
     for (Entity entity : entities) {
+      entity.increasePosition(0, 0, -0.01f);
+      entity.increaseRotation(0, 0, 0.5f);
       renderer.render(entity, shader); // рисуем объект
     }
     shader.stop(); // останавливаем шейдер статических моделей
