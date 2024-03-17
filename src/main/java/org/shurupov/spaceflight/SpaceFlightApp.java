@@ -1,6 +1,6 @@
 package org.shurupov.spaceflight;
 
-import org.shurupov.spaceflight.engine.GameLoop;
+import org.shurupov.spaceflight.engine.graphic.GameLoop;
 
 public class SpaceFlightApp {
 
