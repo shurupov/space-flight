@@ -1,6 +1,12 @@
 package org.shurupov.spaceflight.game;
 
+import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import lombok.extern.slf4j.Slf4j;
 import org.joml.Vector3f;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.entity.ModelTexture;
@@ -8,15 +14,36 @@ import org.shurupov.spaceflight.engine.graphic.entity.RawModel;
 import org.shurupov.spaceflight.engine.graphic.entity.TexturedModel;
 import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
+@Slf4j
 public class GameEntitiesFactory {
 
   public List<Entity> entities(Loader loader) {
-    return List.of(spaceship(loader));
+    List<Entity> entities = new ArrayList<>();
+
+    addEntity(entities, () -> spaceship(loader));
+
+    return entities;
   }
 
-  public Entity spaceship(Loader loader) {
-    int modelWidth = 235;
-    int modelHeight = 630;
+  private void addEntity(List<Entity> entities, EntityCreator creator) {
+    try {
+      entities.add(creator.create());
+    } catch (Throwable e) {
+      log.error("Failed to load");
+    }
+  }
+
+  public Entity spaceship(Loader loader) throws IOException {
+    return entity(loader, "assets/images/spaceRockets_003.png", -90);
+  }
+
+  public Entity entity(Loader loader, String texturePath, float rotation) throws IOException {
+    log.info("Loading model using texture {}", texturePath);
+
+    BufferedImage bufferedImage = ImageIO.read(new FileInputStream(texturePath));
+    int modelWidth = bufferedImage.getWidth();
+    int modelHeight = bufferedImage.getHeight();
+
     int maxDimension = Math.max(modelWidth, modelHeight);
     int dimensionDifference = Math.abs(modelHeight-modelWidth);
     int dimensionSum = modelHeight+modelWidth;
@@ -49,18 +76,21 @@ public class GameEntitiesFactory {
     // загружаем массив вершин, текстурных координат и индексов в память GPU
     RawModel model = loader.loadToVao(vertices, textureCoords, indices);
     // загрузим текстуру используя загрузчик
-    ModelTexture texture = new ModelTexture(loader.loadTexture("src/main/resources/images/spaceRockets_003.png"));
+    ModelTexture texture = new ModelTexture(loader.loadTexture(texturePath));
     // Создание текстурной модели
     TexturedModel staticModel = new TexturedModel(model, texture);
 
-    Entity entity = new Entity(
+    return new Entity(
         staticModel,
         new Vector3f(-0.02f, 0.3f, 0),
-        0, 0, -90,
+        0, 0, rotation,
         0.8f
     );
+  }
 
-    return entity;
+  public interface EntityCreator {
+
+    Entity create() throws Throwable;
   }
 
 }
