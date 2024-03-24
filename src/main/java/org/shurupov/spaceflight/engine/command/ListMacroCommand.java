@@ -5,7 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.shurupov.spaceflight.engine.exception.CommandException;
 
 @RequiredArgsConstructor
-public class SimpleMacroCommand implements Command {
+public class ListMacroCommand implements Command {
 
   private final List<Command> commands;
 

@@ -13,7 +13,7 @@ public class HandlerSelector {
   private final Map<Class<? extends CommandException>, Map<Class<? extends Command>, BiFunction<CommandException, Command, Command>>> handlerStore = new HashMap<>();
 
   @Setter
-  private BiFunction<CommandException, Command, Command> defaultGenerator = (e, c) -> () -> log.info("Error");
+  private BiFunction<CommandException, Command, Command> defaultGenerator = (e, c) -> () -> log.error("Exception thrown", e);
 
   public void addHandler(Class<? extends CommandException> eClass, Class<? extends Command> cClass, BiFunction<CommandException, Command, Command> commandGenerator) {
 

@@ -4,10 +4,12 @@ import static org.shurupov.spaceflight.game.adapter.AdapterFactory.movables;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.shurupov.spaceflight.engine.command.Command;
-import org.shurupov.spaceflight.engine.command.SimpleMacroCommand;
+import org.shurupov.spaceflight.engine.command.ListMacroCommand;
+import org.shurupov.spaceflight.engine.command.QueueMacroCommand;
 import org.shurupov.spaceflight.engine.factory.MacroCommandFactory;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
@@ -26,15 +28,18 @@ public class MacroCommandFactoryImpl implements MacroCommandFactory {
   private final DisplayManager displayManager;
   private final GameState gameState;
 
+  private final Queue<Command> controlQueue;
+
   @Override
   public Command inputProcessingMacroCommand() {
-    return new ControlMacroCommand(gameState.getSpaceship());
+    return new ControlMacroCommand(gameState.getInstructionParser(), controlQueue);
   }
 
   @Override
   public Command gameFrameProcessingMacroCommand() {
-    return new SimpleMacroCommand(
+    return new ListMacroCommand(
         List.of(
+            new QueueMacroCommand(controlQueue),
             new ObjectsMoveCommand(movables(gameState.getMeteors()), -0.003f, 0),
             new ObjectsMoveCommand(movables(gameState.getStars().get(0)), -0.001f, 0),
             new ObjectsMoveCommand(movables(gameState.getStars().get(1)), -0.0006f, 0),

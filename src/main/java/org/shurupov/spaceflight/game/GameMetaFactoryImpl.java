@@ -1,5 +1,6 @@
 package org.shurupov.spaceflight.game;
 
+import java.util.LinkedList;
 import lombok.RequiredArgsConstructor;
 import org.shurupov.spaceflight.engine.factory.GameConfiguration;
 import org.shurupov.spaceflight.engine.factory.MacroCommandFactory;
@@ -16,7 +17,7 @@ public class GameMetaFactoryImpl implements GameMetaFactory {
       DisplayManager displayManager, Loader loader) {
     GameEntitiesFactory gameEntitiesFactory = new GameEntitiesFactory(loader);
     GameState gameState = new GameState(gameEntitiesFactory);
-    return new MacroCommandFactoryImpl(renderer, shader, displayManager, gameState);
+    return new MacroCommandFactoryImpl(renderer, shader, displayManager, gameState, new LinkedList<>());
   }
 
   @Override
