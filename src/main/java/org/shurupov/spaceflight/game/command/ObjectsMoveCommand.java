@@ -22,8 +22,7 @@ public class ObjectsMoveCommand implements Command {
 
   @Override
   public void execute() throws CommandException {
-    for (int i = 0; i < entities.size()-1; i++) {
-      Entity entity = entities.get(i);
+    for (Entity entity : entities) {
       entity.increasePosition(dx, dy, 0f);
       if (entity.getPosition().x < -0.7) {
         entity.getPosition().x = 0.5f + RANDOM.nextFloat() * 0.1f;
