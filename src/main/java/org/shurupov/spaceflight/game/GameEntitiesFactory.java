@@ -36,10 +36,6 @@ public class GameEntitiesFactory {
     return entity( "assets/images/stars/star" + String.format("%02d", i) + ".png");
   }
 
-  public Entity farStar() throws IOException {
-    return entity( "assets/images/stars/star01.png");
-  }
-
   public Entity meteor() throws IOException {
     return entity("assets/images/meteors/spaceMeteors_" + String.format("%03d", random.nextInt(4) + 1) + ".png");
   }
@@ -54,13 +50,11 @@ public class GameEntitiesFactory {
     float result = switch (coordType) {
       case X -> (float) modelWidth;
       case Y -> (float) modelHeight;
-      default -> throw new RuntimeException();
     };
 
     result = switch (position) {
       case TOP, LEFT -> maxDimension - result;
       case BOTTOM, RIGHT -> maxDimension + result;
-      default -> throw new RuntimeException();
     };
 
     result /= 2;
