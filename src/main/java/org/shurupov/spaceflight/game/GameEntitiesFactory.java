@@ -29,7 +29,7 @@ public class GameEntitiesFactory {
   private final Loader loader;
 
   public Entity spaceship() throws IOException {
-    return entity( "assets/images/spaceRockets_003.png", 0, 0, 0);
+    return entity( "assets/images/spaceRockets_003.png", 0, -0.35f, 0);
   }
 
   public Entity star(int i) throws IOException {
