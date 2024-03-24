@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.shurupov.spaceflight.engine.command.Command;
-import org.shurupov.spaceflight.engine.factory.GameFactory;
+import org.shurupov.spaceflight.engine.command.SimpleMacroCommand;
 import org.shurupov.spaceflight.engine.factory.MacroCommandFactory;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
@@ -13,7 +13,7 @@ import org.shurupov.spaceflight.engine.graphic.render.Renderer;
 import org.shurupov.spaceflight.engine.graphic.shaders.StaticShader;
 import org.shurupov.spaceflight.game.command.ControlMacroCommand;
 import org.shurupov.spaceflight.game.command.FrameUpdateMacroCommand;
-import org.shurupov.spaceflight.game.command.GameProcessingMacroCommand;
+import org.shurupov.spaceflight.game.command.ObjectsMoveCommand;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,12 +31,23 @@ public class MacroCommandFactoryImpl implements MacroCommandFactory {
 
   @Override
   public Command gameFrameProcessingMacroCommand() {
-    return new GameProcessingMacroCommand(gameState.getMeteors());
+    return new SimpleMacroCommand(
+        List.of(
+            new ObjectsMoveCommand(gameState.getMeteors(), -0.003f),
+            new ObjectsMoveCommand(gameState.getStars().get(0), -0.001f),
+            new ObjectsMoveCommand(gameState.getStars().get(1), -0.0006f),
+            new ObjectsMoveCommand(gameState.getStars().get(2), -0.0003f)
+        )
+    );
   }
 
   @Override
   public Command displayUpdateProcessingMacroCommand() {
-    List<Entity> entities = new ArrayList<>(gameState.getMeteors());
+    List<Entity> entities = new ArrayList<>();
+    entities.addAll(gameState.getMeteors());
+    entities.addAll(gameState.getStars().get(0));
+    entities.addAll(gameState.getStars().get(1));
+    entities.addAll(gameState.getStars().get(2));
     entities.add(gameState.getSpaceship());
     return new FrameUpdateMacroCommand(renderer, shader, displayManager, entities);
   }

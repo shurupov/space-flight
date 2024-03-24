@@ -10,12 +10,13 @@ import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 @Slf4j
 public class GameState {
 
-
   @Getter
   private Entity spaceship;
   @Getter
   private final List<Entity> meteors;
 
+  @Getter
+  private final List<List<Entity>> stars;
 
   public GameState(GameEntitiesFactory gameEntitiesFactory) {
 
@@ -25,12 +26,25 @@ public class GameState {
       log.error("Spaceship loading failed");
     }
     meteors = new ArrayList<>();
-    for (int i = 0; i < 15; i++) {
+    for (int i = 0; i < 5; i++) {
       try {
         meteors.add(gameEntitiesFactory.meteor());
       } catch (IOException e) {
         log.error("Meteor loading failed");
       }
+    }
+
+    stars = new ArrayList<>();
+    for (int si = 0; si < 3; si++) {
+      List<Entity> starLayer = new ArrayList<>();
+      for (int i = 0; i < 100; i++) {
+        try {
+          starLayer.add(gameEntitiesFactory.star(si));
+        } catch (IOException e) {
+          log.error("Star loading failed");
+        }
+      }
+      stars.add(starLayer);
     }
   }
 }

@@ -7,11 +7,8 @@ import static org.shurupov.spaceflight.game.GameEntitiesFactory.Position.LEFT;
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.imageio.ImageIO;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joml.Random;
 import org.joml.Vector3f;
@@ -31,32 +28,20 @@ public class GameEntitiesFactory {
 
   private final Loader loader;
 
-  public List<Entity> entities() {
-    List<Entity> entities = new ArrayList<>();
-
-    for (int i = 0; i < 15; i++) {
-      addEntity(entities, this::meteor);
-    }
-
-    addEntity(entities, this::spaceship);
-
-    return entities;
-  }
-
-  private void addEntity(List<Entity> entities, EntityCreator creator) {
-    try {
-      entities.add(creator.create());
-    } catch (Throwable e) {
-      log.error("Failed to load texture");
-    }
-  }
-
   public Entity spaceship() throws IOException {
     return entity( "assets/images/spaceRockets_003.png", 0, 0, 0);
   }
 
+  public Entity star(int i) throws IOException {
+    return entity( "assets/images/stars/star" + String.format("%02d", i) + ".png");
+  }
+
+  public Entity farStar() throws IOException {
+    return entity( "assets/images/stars/star01.png");
+  }
+
   public Entity meteor() throws IOException {
-    return entity("assets/images/meteors/spaceMeteors_" + String.format("%03d", random.nextInt(4) + 1) + ".png", 0, -0.5f + random.nextFloat() * 1.2f, -0.5f + random.nextFloat() * 1.2f);
+    return entity("assets/images/meteors/spaceMeteors_" + String.format("%03d", random.nextInt(4) + 1) + ".png");
   }
 
   public Entity planet(int number) throws IOException {
@@ -93,6 +78,10 @@ public class GameEntitiesFactory {
 
   public enum CoordinateType {
     X, Y
+  }
+
+  public Entity entity(String texturePath) throws IOException {
+    return entity(texturePath, 0, -0.5f + random.nextFloat() * 1.2f, -0.5f + random.nextFloat() * 1.2f);
   }
 
   public Entity entity(String texturePath, float rotation, float x, float y) throws IOException {
@@ -149,11 +138,6 @@ public class GameEntitiesFactory {
         0, 0, rotation,
         0.15f * ((float) width / ETALON_WIDTH)
     );
-  }
-
-  public interface EntityCreator {
-
-    Entity create() throws Throwable;
   }
 
 }
