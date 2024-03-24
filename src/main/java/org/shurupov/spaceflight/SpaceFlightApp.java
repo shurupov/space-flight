@@ -1,16 +1,14 @@
 package org.shurupov.spaceflight;
 
 import org.shurupov.spaceflight.engine.factory.GameFactory;
-import org.shurupov.spaceflight.engine.factory.IterationFactory;
 import org.shurupov.spaceflight.engine.graphic.Game;
-import org.shurupov.spaceflight.game.GameEntitiesFactory;
+import org.shurupov.spaceflight.game.GameMetaFactoryImpl;
 
 public class SpaceFlightApp {
 
   public static void main(String[] args) {
-    GameFactory gameFactory = new GameFactory(new IterationFactory(), new GameEntitiesFactory());
-    Game game = gameFactory.game("Space Flight", 1200, 800);
-    game.loop();
-    game.cleanUp();
+    GameFactory gameFactory = new GameFactory(new GameMetaFactoryImpl());
+    Game game = gameFactory.game();
+    game.launch();
   }
 }

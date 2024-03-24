@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.imageio.ImageIO;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.joml.Random;
@@ -21,14 +22,14 @@ import org.shurupov.spaceflight.engine.graphic.entity.TexturedModel;
 import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
 @Slf4j
+@RequiredArgsConstructor
 public class GameEntitiesFactory {
 
   private static final int ETALON_WIDTH = 200;
 
   private final Random random = new Random();
 
-  @Setter
-  private Loader loader;
+  private final Loader loader;
 
   public List<Entity> entities() {
     List<Entity> entities = new ArrayList<>();
