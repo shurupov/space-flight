@@ -140,7 +140,7 @@ public class DisplayManager {
      * Проверяет в начале каждой итерации цикла, получил ли GLFW инструкцию к закрытию, 
      * @return если закрыто окно, то функция вернет false
      */
-    public boolean shouldDisplayClose() {
+    public boolean shouldNotDisplayClose() {
         return !glfwWindowShouldClose(window);
     }
 }

@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.engine.eventloop;
+package org.shurupov.spaceflight.engine.eventloop.command;
 
 import java.util.List;
 import java.util.Random;
@@ -14,7 +14,7 @@ import org.shurupov.spaceflight.engine.graphic.shaders.StaticShader;
 
 @Slf4j
 @RequiredArgsConstructor
-public class IterationMacroCommand implements Command {
+public class RunMacroCommand implements CommandHandler {
 
   private static final Random RANDOM = new Random();
 

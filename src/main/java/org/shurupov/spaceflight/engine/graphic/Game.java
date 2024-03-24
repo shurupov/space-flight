@@ -1,7 +1,8 @@
 package org.shurupov.spaceflight.engine.graphic;
 
 import lombok.RequiredArgsConstructor;
-import org.shurupov.spaceflight.engine.eventloop.Command;
+import org.shurupov.spaceflight.engine.command.Command;
+import org.shurupov.spaceflight.engine.eventloop.EventLoop;
 import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
 import org.shurupov.spaceflight.engine.graphic.render.Loader;
 import org.shurupov.spaceflight.engine.graphic.shaders.StaticShader;
@@ -12,14 +13,10 @@ public class Game {
   private final DisplayManager displayManager;
   private final Loader loader; // загрузчик моделей
   private final StaticShader shader; // шейдер статических моделей
-  private final Command iterationCommand;
+  private final EventLoop eventLoop;
 
   public void loop() {
-
-    // запускаем цикл пока пользователь не закроет окно
-    while (displayManager.shouldDisplayClose()) {
-      iterationCommand.execute();
-    }
+    eventLoop.run();
   }
 
   public void cleanUp() {
