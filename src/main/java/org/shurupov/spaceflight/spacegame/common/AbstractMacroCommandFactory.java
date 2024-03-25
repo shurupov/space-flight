@@ -26,9 +26,8 @@ public abstract class AbstractMacroCommandFactory implements MacroCommandFactory
   private final Renderer renderer;
   private final StaticShader shader;
   private final DisplayManager displayManager;
-  private final GameState gameState;
-
-  private final Queue<Command> controlQueue;
+  protected final GameState gameState;
+  protected final Queue<Command> controlQueue;
 
   @Override
   public Command inputProcessingMacroCommand() {

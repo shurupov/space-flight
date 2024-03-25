@@ -13,7 +13,6 @@ public class MoveYAction implements ControlAction {
 
   @Override
   public void apply(String dy) {
-    log.debug("Moving by Y {}", dy);
     movable.move(0, Float.parseFloat(dy));
     log.debug("Moved by Y {}", dy);
   }

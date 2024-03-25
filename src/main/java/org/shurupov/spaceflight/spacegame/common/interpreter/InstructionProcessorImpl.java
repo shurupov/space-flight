@@ -12,16 +12,17 @@ import org.shurupov.spaceflight.spacegame.common.GameState;
 public class InstructionProcessorImpl implements InstructionProcessor {
 
   public static final String CONTROL_OBJECT_NAME = "spaceship";
-  public static final String MOVE_X_CATION_NAME = "moveX";
-  public static final String MOVE_Y_CATION_NAME = "moveY";
-  public static final List<String> AVAILABLE_ACTIONS = List.of(MOVE_X_CATION_NAME, MOVE_Y_CATION_NAME);
+  public static final String MOVE_X_ACTION_NAME = "moveX";
+  public static final String MOVE_Y_ACTION_NAME = "moveY";
+  public static final String ROTATE_ACTION_NAME = "rotate";
 
   private final GameState gameState;
+  private final List<String> availableActions;
 
   @Override
   public PermissionNode permission(String userType, String userId, String objectId,
       String actionName) {
-    return () -> CONTROL_OBJECT_NAME.equals(objectId) && AVAILABLE_ACTIONS.contains(actionName);
+    return () -> CONTROL_OBJECT_NAME.equals(objectId) && availableActions.contains(actionName);
   }
 
   @Override
