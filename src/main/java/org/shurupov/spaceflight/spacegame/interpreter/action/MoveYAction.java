@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.game.interpreter.action;
+package org.shurupov.spaceflight.spacegame.interpreter.action;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

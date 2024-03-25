@@ -1,6 +1,6 @@
-package org.shurupov.spaceflight.game;
+package org.shurupov.spaceflight.spacegame;
 
-import static org.shurupov.spaceflight.game.adapter.AdapterFactory.movables;
+import static org.shurupov.spaceflight.spacegame.adapter.AdapterFactory.movables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,8 +15,8 @@ import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.graphic.render.DisplayManager;
 import org.shurupov.spaceflight.engine.graphic.render.Renderer;
 import org.shurupov.spaceflight.engine.graphic.shaders.StaticShader;
-import org.shurupov.spaceflight.game.command.ControlMacroCommand;
-import org.shurupov.spaceflight.game.command.FrameUpdateMacroCommand;
+import org.shurupov.spaceflight.spacegame.command.ControlMacroCommand;
+import org.shurupov.spaceflight.spacegame.command.FrameUpdateMacroCommand;
 import org.shurupov.spaceflight.engine.command.ObjectsMoveCommand;
 
 @Slf4j

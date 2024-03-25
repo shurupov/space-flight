@@ -2,7 +2,7 @@ package org.shurupov.spaceflight;
 
 import org.shurupov.spaceflight.engine.factory.GameFactory;
 import org.shurupov.spaceflight.engine.graphic.Game;
-import org.shurupov.spaceflight.game.GameMetaFactoryImpl;
+import org.shurupov.spaceflight.spacegame.GameMetaFactoryImpl;
 
 public class SpaceFlightApp {
 

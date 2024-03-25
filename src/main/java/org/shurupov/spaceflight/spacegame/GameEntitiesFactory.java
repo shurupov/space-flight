@@ -1,8 +1,8 @@
-package org.shurupov.spaceflight.game;
+package org.shurupov.spaceflight.spacegame;
 
-import static org.shurupov.spaceflight.game.GameEntitiesFactory.CoordinateType.X;
-import static org.shurupov.spaceflight.game.GameEntitiesFactory.CoordinateType.Y;
-import static org.shurupov.spaceflight.game.GameEntitiesFactory.Position.LEFT;
+import static org.shurupov.spaceflight.spacegame.GameEntitiesFactory.CoordinateType.X;
+import static org.shurupov.spaceflight.spacegame.GameEntitiesFactory.CoordinateType.Y;
+import static org.shurupov.spaceflight.spacegame.GameEntitiesFactory.Position.LEFT;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;

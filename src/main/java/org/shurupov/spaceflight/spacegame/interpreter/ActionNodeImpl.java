@@ -1,8 +1,8 @@
-package org.shurupov.spaceflight.game.interpreter;
+package org.shurupov.spaceflight.spacegame.interpreter;
 
-import static org.shurupov.spaceflight.game.adapter.AdapterFactory.movable;
-import static org.shurupov.spaceflight.game.interpreter.InstructionProcessorImpl.MOVE_X_CATION_NAME;
-import static org.shurupov.spaceflight.game.interpreter.InstructionProcessorImpl.MOVE_Y_CATION_NAME;
+import static org.shurupov.spaceflight.spacegame.adapter.AdapterFactory.movable;
+import static org.shurupov.spaceflight.spacegame.interpreter.InstructionProcessorImpl.MOVE_X_CATION_NAME;
+import static org.shurupov.spaceflight.spacegame.interpreter.InstructionProcessorImpl.MOVE_Y_CATION_NAME;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +10,9 @@ import org.shurupov.spaceflight.engine.abstraction.Movable;
 import org.shurupov.spaceflight.engine.interpreter.control.ControlAction;
 import org.shurupov.spaceflight.engine.interpreter.exception.InstructionParseException;
 import org.shurupov.spaceflight.engine.interpreter.expression.ActionNode;
-import org.shurupov.spaceflight.game.GameState;
-import org.shurupov.spaceflight.game.interpreter.action.MoveXAction;
-import org.shurupov.spaceflight.game.interpreter.action.MoveYAction;
+import org.shurupov.spaceflight.spacegame.GameState;
+import org.shurupov.spaceflight.spacegame.interpreter.action.MoveXAction;
+import org.shurupov.spaceflight.spacegame.interpreter.action.MoveYAction;
 
 @Slf4j
 @RequiredArgsConstructor

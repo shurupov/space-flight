@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.game.adapter;
+package org.shurupov.spaceflight.spacegame.adapter;
 
 import java.util.List;
 import org.shurupov.spaceflight.engine.abstraction.Movable;

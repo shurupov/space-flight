@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.game.command;
+package org.shurupov.spaceflight.spacegame.command;
 
 import java.util.Queue;
 import lombok.RequiredArgsConstructor;
@@ -7,7 +7,6 @@ import org.lwjgl.glfw.GLFW;
 import org.shurupov.spaceflight.engine.command.Command;
 import org.shurupov.spaceflight.engine.exception.CommandException;
 import org.shurupov.spaceflight.engine.graphic.io.Keyboard;
-import org.shurupov.spaceflight.engine.graphic.io.Mouse;
 import org.shurupov.spaceflight.engine.interpreter.InstructionParser;
 import org.shurupov.spaceflight.engine.interpreter.expression.Instruction;
 
