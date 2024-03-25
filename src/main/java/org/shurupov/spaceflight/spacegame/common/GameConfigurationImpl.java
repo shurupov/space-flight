@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.spacegame;
+package org.shurupov.spaceflight.spacegame.common;
 
 import org.shurupov.spaceflight.engine.factory.GameConfiguration;
 

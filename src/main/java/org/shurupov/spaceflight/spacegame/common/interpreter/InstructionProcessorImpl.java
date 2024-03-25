@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.spacegame.interpreter;
+package org.shurupov.spaceflight.spacegame.common.interpreter;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -6,7 +6,7 @@ import org.shurupov.spaceflight.engine.interpreter.InstructionProcessor;
 import org.shurupov.spaceflight.engine.interpreter.expression.ActionNode;
 import org.shurupov.spaceflight.engine.interpreter.expression.CheckObjectNode;
 import org.shurupov.spaceflight.engine.interpreter.expression.PermissionNode;
-import org.shurupov.spaceflight.spacegame.GameState;
+import org.shurupov.spaceflight.spacegame.common.GameState;
 
 @RequiredArgsConstructor
 public class InstructionProcessorImpl implements InstructionProcessor {

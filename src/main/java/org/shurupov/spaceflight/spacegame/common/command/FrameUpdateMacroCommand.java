@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.spacegame.command;
+package org.shurupov.spaceflight.spacegame.common.command;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;

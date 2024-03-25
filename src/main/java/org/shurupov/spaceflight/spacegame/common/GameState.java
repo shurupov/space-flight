@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.spacegame;
+package org.shurupov.spaceflight.spacegame.common;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.shurupov.spaceflight.engine.graphic.entity.Entity;
 import org.shurupov.spaceflight.engine.interpreter.InstructionParser;
-import org.shurupov.spaceflight.spacegame.interpreter.InstructionProcessorImpl;
+import org.shurupov.spaceflight.spacegame.common.interpreter.InstructionProcessorImpl;
 
 @Slf4j
 public class GameState {

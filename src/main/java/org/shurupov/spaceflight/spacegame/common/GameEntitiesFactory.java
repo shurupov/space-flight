@@ -1,8 +1,8 @@
-package org.shurupov.spaceflight.spacegame;
+package org.shurupov.spaceflight.spacegame.common;
 
-import static org.shurupov.spaceflight.spacegame.GameEntitiesFactory.CoordinateType.X;
-import static org.shurupov.spaceflight.spacegame.GameEntitiesFactory.CoordinateType.Y;
-import static org.shurupov.spaceflight.spacegame.GameEntitiesFactory.Position.LEFT;
+import static org.shurupov.spaceflight.spacegame.common.GameEntitiesFactory.CoordinateType.X;
+import static org.shurupov.spaceflight.spacegame.common.GameEntitiesFactory.CoordinateType.Y;
+import static org.shurupov.spaceflight.spacegame.common.GameEntitiesFactory.Position.LEFT;
 
 import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
@@ -20,7 +20,7 @@ import org.shurupov.spaceflight.engine.graphic.render.Loader;
 
 @Slf4j
 @RequiredArgsConstructor
-public class GameEntitiesFactory {
+public abstract class GameEntitiesFactory {
 
   private static final int ETALON_WIDTH = 200;
 
@@ -28,8 +28,10 @@ public class GameEntitiesFactory {
 
   private final Loader loader;
 
-  public Entity spaceship() throws IOException {
-    return entity( "assets/images/spaceRockets_003.png", 0, -0.35f, 0);
+  public abstract Entity spaceship() throws IOException;
+
+  protected Entity spaceship(float angle, float x, float y) throws IOException {
+    return entity( "assets/images/spaceRockets_003.png", angle, x, y);
   }
 
   public Entity star(int i) throws IOException {

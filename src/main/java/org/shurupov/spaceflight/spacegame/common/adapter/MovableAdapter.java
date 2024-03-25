@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.spacegame.adapter;
+package org.shurupov.spaceflight.spacegame.common.adapter;
 
 import lombok.RequiredArgsConstructor;
 import org.shurupov.spaceflight.engine.abstraction.Movable;

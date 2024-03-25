@@ -1,4 +1,4 @@
-package org.shurupov.spaceflight.spacegame.interpreter.action;
+package org.shurupov.spaceflight.spacegame.common.interpreter.action;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -7,14 +7,14 @@ import org.shurupov.spaceflight.engine.interpreter.control.ControlAction;
 
 @Slf4j
 @RequiredArgsConstructor
-public class MoveYAction implements ControlAction {
+public class MoveXAction implements ControlAction {
 
   private final Movable movable;
 
   @Override
-  public void apply(String dy) {
-    log.debug("Moving by Y {}", dy);
-    movable.move(0, Float.parseFloat(dy));
-    log.debug("Moved by Y {}", dy);
+  public void apply(String dx) {
+    log.debug("Moving by X {}", dx);
+    movable.move(Float.parseFloat(dx), 0);
+    log.debug("Moved by X {}", dx);
   }
 }
